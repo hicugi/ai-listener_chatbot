@@ -5,8 +5,7 @@ ENV PATH="$VENV_PATH/bin:$PATH"
 
 WORKDIR /app
 RUN mkdir records
-
-COPY ./src .
+COPY ./requirements.txt .
 
 RUN apt-get update && apt-get install -y \
     wget \
@@ -19,7 +18,7 @@ RUN apt-get update && apt-get install -y \
     python3.10-distutils \
     python3-pip \
     python3-venv \
-    portaudio19-dev python3-pyaudio \
+    portaudio19-dev python3-pyaudio
 
 RUN python3.10 -m venv $VENV_PATH
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.10 1

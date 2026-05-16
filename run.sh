@@ -8,5 +8,5 @@ docker run -it \
   -v $(pwd)/venv:/opt/venv \
   -v $(pwd)/public:/app/public \
   -v $(pwd)/src:/app/src \
-  --env-file .env \
-  ai_python:latest &
+  -v $(pwd)/models:/app/models \
+  ai-listener_chatbot:latest &
