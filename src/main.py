@@ -3,6 +3,7 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from llama_cpp import Llama
 from dotenv import load_dotenv
+from speach_to_text import getSpeachText
 
 load_dotenv()
 
@@ -65,6 +66,11 @@ class NewFileHandler(FileSystemEventHandler):
 
         print("--------------------------------------------")
         print(output)
+
+        file_name = file_path[file_path.rfind("/")+1:]
+        text_file_path = f"./public/{file_name}.txt"
+        with open(text_file_path, "w") as f:
+            f.write(output)
 
         is_wav_processing = False
 

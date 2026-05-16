@@ -1,9 +1,5 @@
 FROM nvidia/cuda:12.1.1-cudnn8-runtime-ubuntu22.04
 
-WORKDIR /app
-RUN mkdir records
-COPY ./requirements.txt .
-
 RUN apt-get update && apt-get install -y \
     wget \
     ffmpeg \
@@ -19,6 +15,10 @@ RUN apt-get update && apt-get install -y \
 
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.10 1
 
+WORKDIR /app
+RUN mkdir records
+COPY ./requirements.txt .
+COPY ./.env .
 RUN python -m pip install --upgrade pip
 RUN pip install -r requirements.txt
 RUN pip install --upgrade pip setuptools wheel

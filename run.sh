@@ -7,9 +7,6 @@ docker run -it \
   -v $(pwd)/public:/app/public \
   -v $(pwd)/src:/app/src \
   -v $(pwd)/models:/app/models \
+  -v $(pwd)/pip-cache:/root/.cache/pip \
+  -v $(pwd)/venv:/opt/venv \
   ai-listener_chatbot:latest &
-
-
-# Use cache for runing pip install inside of a docker container
-  # -v $(pwd)/pip-cache:/root/.cache/pip \
-  # -v $(pwd)/venv:/opt/venv \

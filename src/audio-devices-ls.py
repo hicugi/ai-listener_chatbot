@@ -10,3 +10,6 @@ for idx, device in enumerate(devices):
         "input_channels=",
         device["max_input_channels"]
     )
+
+default_device_info = sd.query_devices(kind='input')
+print(f"Default Input Sample Rate: {default_device_info['default_samplerate']} Hz")

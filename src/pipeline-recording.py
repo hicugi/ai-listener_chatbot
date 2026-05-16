@@ -11,8 +11,8 @@ import sounddevice as sd
 # CONFIG
 # =========================
 DEVICE_ID = 14
-CHANNELS = 32
-SAMPLE_RATE = 44100
+CHANNELS = 1
+SAMPLE_RATE = 44100.0
 
 BLOCK_DURATION = 0.5          # seconds
 SILENCE_THRESHOLD = 0.04      # lower = more sensitive

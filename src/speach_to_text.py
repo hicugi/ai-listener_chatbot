@@ -17,6 +17,3 @@ def getSpeachText(file_path):
             res += segment.text + " "
 
         return res
-
-str = getSpeachText("./public/20260516_135041.wav")
-print(str)
