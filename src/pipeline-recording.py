@@ -10,8 +10,8 @@ import sounddevice as sd
 # =========================
 # CONFIG
 # =========================
-DEVICE_ID = 8
-CHANNELS = 2
+DEVICE_ID = 14
+CHANNELS = 32
 SAMPLE_RATE = 44100
 
 BLOCK_DURATION = 0.5          # seconds

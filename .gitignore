@@ -1,4 +1,5 @@
 models
 records
 pip-cache
+public
 .env

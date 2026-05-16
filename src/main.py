@@ -1,16 +1,14 @@
 import time
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
-from faster_whisper import WhisperModel
 from llama_cpp import Llama
-import pyautogui
+from dotenv import load_dotenv
+
+load_dotenv()
 
 MODEL_PATH = "./models/gemma-4-E4B-it-OBLITERATED-Q4_K_M.gguf"
 WAV_DIRECTORY_PATH = "./records"
 SYSTEM_CONTENT = "You are a stream viewer. Skip retorical questions"
-
-model_size = "base" # "large-v3"
-model = WhisperModel(model_size, device="cuda", compute_type="float16")
 
 llm = Llama(
     model_path=MODEL_PATH,
@@ -48,7 +46,7 @@ class NewFileHandler(FileSystemEventHandler):
         file_path = event.src_path
 
         print("============================================")
-        print("New file:", file_path)
+        print("- New file:", file_path)
 
         if ".wav" not in file_path:
             return
@@ -58,14 +56,7 @@ class NewFileHandler(FileSystemEventHandler):
 
         print("- New recording:", file_path)
 
-        segments, info = model.transcribe(file_path, beam_size=5)
-        print("- Detected language '%s' with probability %f" % (info.language, info.language_probability))
-
-        speach_input = ""
-
-        for segment in segments:
-            # print("[%.2fs -> %.2fs] %s" % (segment.start, segment.end, segment.text))
-            speach_input += segment.text + " "
+        speach_input = getSpeachText(file_path)
 
         print("- Sending the text to AI:", speach_input)
         print("--------------------------------------------")
@@ -74,9 +65,6 @@ class NewFileHandler(FileSystemEventHandler):
 
         print("--------------------------------------------")
         print(output)
-
-        pyautogui.write(output, interval=0.1)
-        pyautogui.press('enter')
 
         is_wav_processing = False
 

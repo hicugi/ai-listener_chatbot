@@ -3,7 +3,6 @@ numpy
 watchdog
 torch
 python-dotenv
-pyautogui
 
 faster-whisper
 llama-cpp-python
