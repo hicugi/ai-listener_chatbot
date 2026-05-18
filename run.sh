@@ -1,6 +1,7 @@
 docker run -it \
   --name ai-listener_chatbot \
   --device /dev/snd \
+  --gpus all \
   -e PULSE_SERVER=unix:${XDG_RUNTIME_DIR}/pulse/native \
   -v ${XDG_RUNTIME_DIR}/pulse/native:${XDG_RUNTIME_DIR}/pulse/native \
   -v ~/.config/pulse/cookie:/root/.config/pulse/cookie \
