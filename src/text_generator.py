@@ -1,10 +1,13 @@
+import os
 from dotenv import load_dotenv
 from llama_cpp import Llama
 
 load_dotenv()
+load_dotenv(dotenv_path="./src/.env.public")
 
-MODEL_PATH = "./models/supergemma4-26b-uncensored-fast-v2-Q4_K_M.gguf"
-SYSTEM_CONTENT = "You are a stream viewer. Don't extrapolate. Response casual and simple terms."
+MODEL_NAME = os.getenv("TEXT_GENERATOR_FILE_NAME")
+MODEL_PATH = f"./models/{MODEL_NAME}"
+SYSTEM_CONTENT = os.getenv("TEXT_GENERATOR_SYSTEM_CONTENT")
 
 llm = Llama(
     model_path=MODEL_PATH,

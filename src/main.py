@@ -3,10 +3,25 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from speach_to_text import getSpeachText
 from text_generator import getAiResponse
+import threading
+from pipeline_recording import startListening, disabledListening, enableListening
 
 WAV_DIRECTORY_PATH = "./records"
 
 is_wav_processing = False
+
+def aiThinking():
+    global is_wav_processing
+    is_wav_processing = True
+
+    disabledListening()
+
+def aiStopThinking():
+    global is_wav_processing
+    is_wav_processing = False
+
+    enableListening()
+
 
 class NewFileHandler(FileSystemEventHandler):
     def on_created(self, event):
@@ -24,7 +39,7 @@ class NewFileHandler(FileSystemEventHandler):
             return
         if is_wav_processing == True:
             return
-        is_wav_processing = True
+        aiThinking()
 
         print("- New recording:", file_path)
 
@@ -43,10 +58,9 @@ class NewFileHandler(FileSystemEventHandler):
         with open(text_file_path, "w") as f:
             f.write(output)
 
-        is_wav_processing = False
+        aiStopThinking()
 
-
-if __name__ == "__main__":
+def runDirectoryObserver():
     path = WAV_DIRECTORY_PATH # directory to watch
 
     event_handler = NewFileHandler()
@@ -66,3 +80,16 @@ if __name__ == "__main__":
 
     observer.join()
 
+if __name__ == "__main__":
+    threading.Thread(
+        target=startListening,
+        daemon=True
+    ).start()
+
+    threading.Thread(
+        target=runDirectoryObserver,
+        daemon=True
+    ).start()
+
+while True:
+    time.sleep(10)

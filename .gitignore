@@ -2,6 +2,8 @@ src/__pycache__
 pip-cache
 .env
 
+src/test.py
+
 models
 records
 public
