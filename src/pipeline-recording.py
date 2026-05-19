@@ -7,10 +7,19 @@ from datetime import datetime
 import numpy as np
 import sounddevice as sd
 
+def getDefaultId():
+    devices = sd.query_devices()
+
+    for idx, device in enumerate(devices):
+        if device["name"] == "default":
+            return idx
+
+    return 0
+
 # =========================
 # CONFIG
 # =========================
-DEVICE_ID = 14
+DEVICE_ID = getDefaultId()
 CHANNELS = 1
 SAMPLE_RATE = 44100.0
 
