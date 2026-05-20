@@ -16,4 +16,4 @@ def getSpeachText(file_path):
             # print("[%.2fs -> %.2fs] %s" % (segment.start, segment.end, segment.text))
             res += segment.text + " "
 
-        return res
+        return res.strip()

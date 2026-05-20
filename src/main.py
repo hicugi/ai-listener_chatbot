@@ -46,7 +46,7 @@ class NewFileHandler(FileSystemEventHandler):
         speach_input = getSpeachText(file_path)
         print("- Speach to text:", speach_input)
 
-        if "... ..." in speach_input:
+        if speach_input == "" or "... ..." in speach_input:
             print("- Silence identified, skipping the input")
             aiStopThinking()
             return
