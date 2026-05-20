@@ -2,7 +2,7 @@ import time
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from speach_to_text import getSpeachText
-from text_generator import getAiResponse
+from text_generator import getAiResponse, clearAiMessages
 import threading
 from pipeline_recording import startListening, disabledListening, enableListening
 
@@ -44,8 +44,22 @@ class NewFileHandler(FileSystemEventHandler):
         print("- New recording:", file_path)
 
         speach_input = getSpeachText(file_path)
+        print("- Speach to text:", speach_input)
 
-        print("- Sending the text to AI:", speach_input)
+        if "skip, skip" in speach_input:
+            print("- Skip command identified")
+            print("--------------------------------------------")
+            aiStopThinking()
+            return
+
+        if "Command" in speach_input and "forget everything" in speach_input:
+            print("- Clear command identified")
+            print("--------------------------------------------")
+            clearAiMessages()
+            aiStopThinking()
+            return
+
+        print("- Sending the text to AI")
         print("--------------------------------------------")
 
         output = getAiResponse(speach_input)

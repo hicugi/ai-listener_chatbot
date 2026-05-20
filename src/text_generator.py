@@ -14,9 +14,8 @@ llm = Llama(
     n_ctx=8096,
 )
 
-messages = [
-    {"role": "system", "content": SYSTEM_CONTENT},
-]
+system_msg = {"role": "system", "content": SYSTEM_CONTENT}
+messages = [system_msg]
 
 def getAiResponse(user_input: str):
     messages.append({"role": "user", "content": user_input})
@@ -32,3 +31,7 @@ def getAiResponse(user_input: str):
     messages.append({"role": "assistant", "content": assistant_reply})
 
     return assistant_reply
+
+def clearAiMessages():
+    global messages
+    messages = [system_msg]
